@@ -14,135 +14,25 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-  <style>    
-    /* Set black background color, white text and some padding */
-    .rectangle {
-	  height: 100px;
-	  width: 100px;
-	  background-color: blue;
-          float: left;
-	  margin-left: 20%;
-	  position:relative;
-	}
-
-	</style>
-
 	<style>
-	.rectangle1 {
-	  height: 100px;
-	  width: 100px;
-	  background-color: blue;
-          float: left;
-	  margin-left: 20%;
-	  position:relative;
-	}
-	</style>
-
-	<style>
-	.rectangle2 {
-	  height: 100px;
-	  width: 100px;
-	  background-color: blue;
-          float: left;
-	  margin-left: 20%;
-	  position:relative;
-	}
-	</style>
-
-	<style>
-
-		.switch {
-	  position: relative;
-	  display: inline-block;
-	  width: 90px;
-	  height: 34px;
-	}
-
-	.switch input {display:none;}
-
-	.slider {
-	  position: absolute;
-	  cursor: pointer;
-	  top: 0;
-	  left: 0;
-	  right: 0;
-	  bottom: 0;
-	  background-color: #ca2222;
-	  -webkit-transition: .4s;
-	  transition: .4s;
-	}
-
-	.slider:before {
-	  position: absolute;
-	  content: "";
-	  height: 26px;
-	  width: 26px;
-	  left: 4px;
-	  bottom: 4px;
-	  background-color: white;
-	  -webkit-transition: .4s;
-	  transition: .4s;
-	}
-
-	input:checked + .slider {
-	  background-color: #2ab934;
-	}
-
-	input:focus + .slider {
-	  box-shadow: 0 0 1px #2196F3;
-	}
-
-	input:checked + .slider:before {
-	  -webkit-transform: translateX(55px);
-	  -ms-transform: translateX(55px);
-	  transform: translateX(55px);
-	}
-
-	/*------ ADDED CSS ---------*/
-	.on
-	{
-	  display: none;
-	}
-
-	.on, .off
-	{
-	  color: white;
-	  position: absolute;
-	  transform: translate(-50%,-50%);
-	  top: 50%;
-	  left: 50%;
-	  font-size: 10px;
-	  font-family: Verdana, sans-serif;
-	}
-
-	input:checked+ .slider .on
-	{display: block;}
-
-	input:checked + .slider .off
-	{display: none;}
-
-	/*--------- END --------*/
-
-	/* Rounded sliders */
-	.slider.round {
-	  border-radius: 34px;
-	}
-
-	.slider.round:before {
-	  border-radius: 50%;}
 	h1{
 		text-align: center;
 	}
-    footer {
+  footer {
       background-color: #555;
       color: white;
       padding: 15px;
-    }
-    body { 
-  background: url("https://images.pexels.com/photos/19670/pexels-photo.jpg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"); 
-}
-    @media all and(max-width: 480px) {
-}
+  }
+  body { 
+      background: url("https://images.pexels.com/photos/19670/pexels-photo.jpg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"); 
+  }
+  @media all and(max-width: 480px) {
+  }
+  image {
+    width: auto;
+    max-width: 100%;
+    height: auto;
+  }
   </style>
 </head>
 <body>
