@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Home</title>
+  <title>Air Quality</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
@@ -164,35 +164,54 @@
     <button class="btn btn-success" type="submit">Search</button>
   </form>
 </nav>
-	<h1 style="font-size:400%;color:blue;text-align:center;"> Home Control  </h1>
+	<h1 style="font-size:400%;color:blue;text-align:center;"> Air Quality </h1>
 <div class="container-fluid text-center">    
   <div class="row">
-  	<div class="col-sm-12">
-    	<div class="row">
-        	<div id="hum" class="col-sm-2" style="border-left: solid; border-top: solid;">
-            	<center style="font-size:200%;">Humidity<p id='humidity' >0</p></center>
-            </div>
-            <div id="hum" class="col-sm-1" style=" border-top: solid;">
-            	<img src="https://cdn4.iconfinder.com/data/icons/autumn-24/32/thermometer-autumn-humidity-fall-rain-temperature-measure-512.png"  width="100p" height="100">
-            </div>
-            <div id="temp"  class="col-sm-2"	style="border-left: solid; border-top: solid;">
-            	<center style="font-size:200%;">Temperature<p id='temperature'>0</p></center>
+    <div class="col-sm-12">
+      <div class="row">
+            <div id="temp"  class="col-sm-3"  style="border-left: solid; border-top: solid;">
+              <center style="font-size:200%;">Temperature<p id='temperature'>0</p></center>
             </div>
             <div id="temp" class="col-sm-1" style=" border-top: solid;">
-            	<img src="https://cdn0.iconfinder.com/data/icons/nature-1-7/52/7-512.png"  width="100p" height="100">
+              <img src="https://cdn0.iconfinder.com/data/icons/nature-1-7/52/7-512.png"  width="100p" height="100">
             </div>
-            <div id="Co" class="col-sm-2"	style="border-left: solid; border-top: solid;">
-            	<center style="font-size:200%;">Light sensor<p id='CO'>0</p></center>
+            <div id="hum" class="col-sm-3" style="border-left: solid; border-top: solid;">
+              <center style="font-size:200%;">Humidity<p id='humidity' >0</p></center>
             </div>
-            <div id="Co" class="col-sm-1" style="border-top: solid;border-right: solid;">
-            	<img src="http://osxdaily.com/wp-content/uploads/2010/03/precisely-adjust-brightness-on-mac.JPG"  width="90p" height="100">
+            <div id="hum" class="col-sm-1" style=" border-top: solid;border-right: solid;">
+              <img src="https://cdn4.iconfinder.com/data/icons/autumn-24/32/thermometer-autumn-humidity-fall-rain-temperature-measure-512.png"  width="100p" height="100">
             </div>
-            <div class="col-sm-3"	style="border-top: solid;border-right: solid;">
-            	<center style="font-size:200%;">Control<p>Home</p></center>
+            <div id="hum" class="col-sm-3" style="border-top: solid;">
+              <center style="font-size:200%;">AQI<p id='humidity' >0</p></center>
+            </div>
+            <div id="hum" class="col-sm-1" style=" border-top: solid;border-right: solid;">
+              <img src="https://www.pca.state.mn.us/sites/default/files/aqi-icon-airdata.png"  width="90p" height="90">
+            </div>
+      </div>
+    </div>
+  	<div class="col-sm-12">
+    	<div class="row">
+        	  <div id="pm25" class="col-sm-3" style="border-left: solid; border-top: solid;">
+            	<center style="font-size:200%;">PM2.5<p id='P2_5' >0</p></center>
+            </div>
+            <div id="pm25" class="col-sm-1" style=" border-top: solid;">
+            	<img src="https://cdn1.iconfinder.com/data/icons/dust-1/500/dust-13-512.png"  width="90p" height="100">
+            </div>
+            <div id="co" class="col-sm-3" style="border-top: solid;border-left: solid;">
+              <center style="font-size:200%;">CO<p id='CO'>0</p></center>
+            </div>
+            <div id="co" class="col-sm-1" style="border-top: solid;border-right: solid;">
+              <img src="http://cityofmentor.com/wp-content/uploads/carbon-monoxide-300x300-250x250.png"  width="90p" height="100">
+            </div>
+            <div id="so2"  class="col-sm-3"	style="border-top: solid;">
+            	<center style="font-size:200%;">SO2<p id='SO2'>0</p></center>
+            </div>
+            <div id="so2" class="col-sm-1" style=" border-top: solid;border-right: solid;">
+            	<img src="https://www.weerstationkempen.be/template/homepage/blocks/airQualityWorld/icons/light/so2.png"  width="90p" height="100">
             </div>
         </div>
     </div>	
-    <div class="col-sm-9" style="border-style: solid;">
+    <div class="col-sm-12" style="border-top: solid; border-left: solid;border-right: solid;">
       <div class="col-sm-12">
            <div class="chart-container" style="margin-left: -30px; margin-top: 50px;margin-right: 20px;"><canvas id="myChart" width="300px" height="150px"></canvas></div>
            <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
@@ -273,6 +292,9 @@
                 if(data.CO > 100){
                 	document.getElementById('CO').style.backgroundColor = '#FFFF00';
                 }
+                document.getElementById('SO2').innerHTML = data.SO2;
+                document.getElementById('P2_5').innerHTML = data.P2_5;
+                
                 if(chart.data.labels.length != 20) { //If we have less than 15 data points in the graph
                     chart.data.labels.push(data.time);  //Add time in x-asix
                     chart.data.datasets.forEach((dataset) => {
@@ -296,35 +318,6 @@
         </script>
       </div>
      </div>
-    <div class="col-sm-3" style="border-top: solid;">
-      <div class="row">
-      	<div class="col-sm-12">
-      		</br>
-      		</br>
-      		</br>
-      		</br>
-      	</div>
-        <div class="col-sm-12">
-        	<div class="slidecontainer">
-	 			<label class="switch"><input id='led1' type="checkbox" onclick="calc_led1()"><div class="slider round"><!--ADDED HTML -->
-	 			<span class="on">ON</span><span class="off">OFF</span><!--END--></div>
-	 			</label>
-	 			<p style="font-size:200%;">LED 1</p>
-	 			<label class="switch"><input id='led2' type="checkbox" onclick="calc_led2()"><div class="slider round"><!--ADDED HTML -->
-	 			<span class="on">ON</span><span class="off">OFF</span><!--END--></div>
-	 			</label>
-	 			<p style="font-size:200%;">LED 2</p>
-
-		</div>
-        </div>
-      	</div>
-        	<div class="col-sm-12">
-          		<div class="slidecontainer">
-	 				<input type="range" min="0" max="255" value="50" id="myRange" onchange="updateSlider(this.value)">
-	 				<p style="font-size:200%;">Brightness</p>
-	 		</div>
-        	</div>
-      </div>
     </div>
 </div>
 <footer class="container-fluid text-center">

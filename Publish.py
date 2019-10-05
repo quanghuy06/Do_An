@@ -39,15 +39,13 @@ def publish_Values_to_MQTT():
     hum = int(random.uniform(1,100))
     CO = int(random.uniform(10,200))
     SO2 = float("{0:.2f}".format(random.uniform(0.2,0.8)))
-    P2_5 = float("{0:.2f}".format(random.uniform(0.1,0.8)))
-    Gas = int(random.uniform(1,1000))	
+    P2_5 = float("{0:.2f}".format(random.uniform(0.1,0.8)))	
     Sensor_data = {}
     Sensor_data['Temperature'] = temp
     Sensor_data['Humidity'] = hum
     Sensor_data['CO'] = CO
     Sensor_data['SO2'] = SO2
     Sensor_data['P2_5'] = P2_5
-    Sensor_data['Gas'] = Gas
     Sensor_json_data = json.dumps(Sensor_data)
     print("Publishing Value: ")
     publish_To_Topic(MQTT_Topic, Sensor_json_data)

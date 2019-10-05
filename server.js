@@ -141,16 +141,16 @@ client.on("message", function(topic, message) {
 		console.log(P2_5);
 		var time = new Date();
 		console.log("Date insert: " +time);
-		connection.query('INSERT INTO AQI(Temperature, Humidity,CO, SO2,P2_5,Gas, Date_and_Time) values(?,?,?,?,?,?,?)', [a.Temperature,a.Humidity, CO, SO2, P2_5,a.Gas,time]).then(conn => {
+		connection.query('INSERT INTO AQI(Temperature,Humidity,CO,SO2,P2_5,Date_and_Time) values(?,?,?,?,?,?)', [a.Temperature,a.Humidity, CO, SO2, P2_5,time]).then(conn => {
 		console.log("Inserted");
 		});
 		io.sockets.emit('temp', {time:time, P2_5:P2_5, hum:a.Humidity,CO:CO, SO2:SO2, temp:a.Temperature});	
 	}
 });
 
-/*io.on('connection', (socket) => {
+io.on('connection', (socket) => {
 	console.log("Someone connectted")
-	connection.query('SELECT * FROM s')
+	connection.query('SELECT * FROM AQI')
 		.then(row => {
 			console.log("Databases: ");
 			console.log(row);
@@ -160,23 +160,7 @@ client.on("message", function(topic, message) {
 				console.log(value.Humidity);
 				console.log(value.Illumination);
 				console.log(m_time);
-				io.sockets.emit('temp', {time:m_time, temp:value.Temperature, hum:value.Humidity,llu:value.Illumination});
+				io.sockets.emit('temp', {time:time, P2_5:P2_5, hum:a.Humidity,CO:CO, SO2:SO2, temp:a.Temperature});
 		});
 	});
-	socket.on('led_status1',(data) =>{
-		console.log("led status change: led1 %d", data.led);
-		publish("Button1",data.led.toString());
-	});
-
-	socket.on('led_status2',(data) =>{
-		console.log("led status change: led2 %d",data.led);
-		publish("Button2",data.led.toString());
-	});
-
-	socket.on('led_pwm',(data) =>{
-		console.log("led pwm change: led1 %d",data.led1);
-		publish("Slider",data.led1.toString());
-	});
-
-
-});*/
+});
