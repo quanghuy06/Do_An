@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Home</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <link rel="stylesheet" href="static/style.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+  <script src="static/jquery-3.2.1.min.js"></script>
+  <script src="static/Chart.min.js"></script>
+  <script src="socket.io/socket.io.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+  <style>    
+    /* Set black background color, white text and some padding */
+    .rectangle {
+	  height: 100px;
+	  width: 100px;
+	  background-color: blue;
+          float: left;
+	  margin-left: 20%;
+	  position:relative;
+	}
+
+	</style>
+
+	<style>
+	.rectangle1 {
+	  height: 100px;
+	  width: 100px;
+	  background-color: blue;
+          float: left;
+	  margin-left: 20%;
+	  position:relative;
+	}
+	</style>
+
+	<style>
+	.rectangle2 {
+	  height: 100px;
+	  width: 100px;
+	  background-color: blue;
+          float: left;
+	  margin-left: 20%;
+	  position:relative;
+	}
+	</style>
+
+	<style>
+
+		.switch {
+	  position: relative;
+	  display: inline-block;
+	  width: 90px;
+	  height: 34px;
+	}
+
+	.switch input {display:none;}
+
+	.slider {
+	  position: absolute;
+	  cursor: pointer;
+	  top: 0;
+	  left: 0;
+	  right: 0;
+	  bottom: 0;
+	  background-color: #ca2222;
+	  -webkit-transition: .4s;
+	  transition: .4s;
+	}
+
+	.slider:before {
+	  position: absolute;
+	  content: "";
+	  height: 26px;
+	  width: 26px;
+	  left: 4px;
+	  bottom: 4px;
+	  background-color: white;
+	  -webkit-transition: .4s;
+	  transition: .4s;
+	}
+
+	input:checked + .slider {
+	  background-color: #2ab934;
+	}
+
+	input:focus + .slider {
+	  box-shadow: 0 0 1px #2196F3;
+	}
+
+	input:checked + .slider:before {
+	  -webkit-transform: translateX(55px);
+	  -ms-transform: translateX(55px);
+	  transform: translateX(55px);
+	}
+
+	/*------ ADDED CSS ---------*/
+	.on
+	{
+	  display: none;
+	}
+
+	.on, .off
+	{
+	  color: white;
+	  position: absolute;
+	  transform: translate(-50%,-50%);
+	  top: 50%;
+	  left: 50%;
+	  font-size: 10px;
+	  font-family: Verdana, sans-serif;
+	}
+
+	input:checked+ .slider .on
+	{display: block;}
+
+	input:checked + .slider .off
+	{display: none;}
+
+	/*--------- END --------*/
+
+	/* Rounded sliders */
+	.slider.round {
+	  border-radius: 34px;
+	}
+
+	.slider.round:before {
+	  border-radius: 50%;}
+	h1{
+		text-align: center;
+	}
+    footer {
+      background-color: #555;
+      color: white;
+      padding: 15px;
+    }
+    body { 
+  background: url("https://images.pexels.com/photos/19670/pexels-photo.jpg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"); 
+}
+    @media all and(max-width: 480px) {
+}
+  </style>
+</head>
+<body>
+<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+  <a class="navbar-brand" href="#">
+    <img src="http://qldt.ptit.edu.vn/MessageFile/242794Logo2.gif" alt="logo" style="width:40px;">
+  </a>
+  <ul class="navbar-nav">
+    <li class="nav-item">
+      <a class="nav-link" style="font-size:200%;" href="#">quanghuy</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" style="font-size:200%;" href="#">Logout</a>
+    </li>
+  </ul>
+  <form class="form-inline" action="/action_page.php">
+    <input class="form-control mr-sm-2" type="text" placeholder="Search">
+    <button class="btn btn-success" type="submit">Search</button>
+  </form>
+</nav>
+	<h1 style="font-size:400%;color:blue;text-align:center;"> Home Control  </h1>
+<div class="container-fluid text-center">    
+  <div class="row">
+  	<div class="col-sm-12">
+    	<div class="row">
+        	<div id="hum" class="col-sm-2" style="border-left: solid; border-top: solid;">
+            	<center style="font-size:200%;">Humidity<p id='humidity' >0</p></center>
+            </div>
+            <div id="hum" class="col-sm-1" style=" border-top: solid;">
+            	<img src="https://cdn4.iconfinder.com/data/icons/autumn-24/32/thermometer-autumn-humidity-fall-rain-temperature-measure-512.png"  width="100p" height="100">
+            </div>
+            <div id="temp"  class="col-sm-2"	style="border-left: solid; border-top: solid;">
+            	<center style="font-size:200%;">Temperature<p id='temperature'>0</p></center>
+            </div>
+            <div id="temp" class="col-sm-1" style=" border-top: solid;">
+            	<img src="https://cdn0.iconfinder.com/data/icons/nature-1-7/52/7-512.png"  width="100p" height="100">
+            </div>
+            <div id="Co" class="col-sm-2"	style="border-left: solid; border-top: solid;">
+            	<center style="font-size:200%;">Light sensor<p id='CO'>0</p></center>
+            </div>
+            <div id="Co" class="col-sm-1" style="border-top: solid;border-right: solid;">
+            	<img src="http://osxdaily.com/wp-content/uploads/2010/03/precisely-adjust-brightness-on-mac.JPG"  width="90p" height="100">
+            </div>
+            <div class="col-sm-3"	style="border-top: solid;border-right: solid;">
+            	<center style="font-size:200%;">Control<p>Home</p></center>
+            </div>
+        </div>
+    </div>	
+    <div class="col-sm-9" style="border-style: solid;">
+      <div class="col-sm-12">
+           <div class="chart-container" style="margin-left: -30px; margin-top: 50px;margin-right: 20px;"><canvas id="myChart" width="300px" height="150px"></canvas></div>
+           <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>
+           <script>
+            var socket = io.connect('http://192.168.0.101:3000'); //connect to server
+
+            var ctx = document.getElementById('myChart').getContext('2d');
+            var chart = new Chart(ctx, {
+                // The type of chart we want to create
+                type: 'line',
+
+                // The data for our dataset
+                data: {
+                labels: [],
+                datasets: [{
+                    label: "P2_5 Value",
+                    borderColor: "orange",
+                    data: [],
+                    fill: false,
+                    backgroundColor: 'orange',
+                },
+				{
+                    label: "CO Value",
+                    borderColor: "navy",
+                    data: [],
+                    fill: false,
+                    backgroundColor: 'navy',
+				},
+				{
+                    label: "SO2 Value",
+                    borderColor: "yellow",
+                    data: [],
+                    fill: false,
+                    backgroundColor: 'yellow',
+                }
+				]
+                },
+
+                // Configuration options go here
+                options: {}
+                
+            });
+			
+            socket.on('temp', function(data) { //As a temp data is received 
+		console.log(data.time);
+                console.log(data.temp);
+				// nhiet do , do am , anh sang 
+				var my_data = [data.P2_5 , data.CO, data.SO2, data.temp ];
+				console.log(my_data);
+				var index = 0;
+				
+                document.getElementById('temperature').innerHTML = data.temp; //update the date
+                if(data.temp < 30){
+                	document.getElementById('temperature').style.backgroundColor = '#f7c80c';
+                } 
+                if(data.temp >= 30){
+                	document.getElementById('temperature').style.backgroundColor = 'coral';
+                } 
+                document.getElementById('humidity').innerHTML = data.hum; //update the date
+                if(data.hum < 65){
+                	document.getElementById('humidity').style.backgroundColor = '#c4c2bc';
+                }
+                if(data.hum > 65 && data.hum < 80){
+                	document.getElementById('humidity').style.backgroundColor = '#79eaea';
+                }
+                if(data.hum > 80){
+                	document.getElementById('humidity').style.backgroundColor = '#0d8ac4';
+                }
+                document.getElementById('CO').innerHTML = data.CO; //update the date
+                if(data.CO < 30){
+                	document.getElementById('CO').style.backgroundColor = '#F2F5A9';
+                }
+                if(data.CO > 30 && data.CO < 50){
+                	document.getElementById('CO').style.backgroundColor = '#F4FA58';
+                }
+                if(data.CO > 100){
+                	document.getElementById('CO').style.backgroundColor = '#FFFF00';
+                }
+                if(chart.data.labels.length != 20) { //If we have less than 15 data points in the graph
+                    chart.data.labels.push(data.time);  //Add time in x-asix
+                    chart.data.datasets.forEach((dataset) => {
+                        dataset.data.push(my_data[index]); //Add temp in y-axis
+						console.log(index);
+						index ++;
+                    });
+                }
+                else { //If there are already 15 data points in the graph.
+                    chart.data.labels.shift(); //Remove first time data
+                    chart.data.labels.push(data.time); //Insert latest time data
+                    chart.data.datasets.forEach((dataset) => {
+                        dataset.data.shift(); //Remove first temp data
+                        dataset.data.push(my_data[index]); //Insert latest temp data
+						index ++;
+                    });
+                }
+                chart.update(); //Update the graph.
+            });
+
+        </script>
+      </div>
+     </div>
+    <div class="col-sm-3" style="border-top: solid;">
+      <div class="row">
+      	<div class="col-sm-12">
+      		</br>
+      		</br>
+      		</br>
+      		</br>
+      	</div>
+        <div class="col-sm-12">
+        	<div class="slidecontainer">
+	 			<label class="switch"><input id='led1' type="checkbox" onclick="calc_led1()"><div class="slider round"><!--ADDED HTML -->
+	 			<span class="on">ON</span><span class="off">OFF</span><!--END--></div>
+	 			</label>
+	 			<p style="font-size:200%;">LED 1</p>
+	 			<label class="switch"><input id='led2' type="checkbox" onclick="calc_led2()"><div class="slider round"><!--ADDED HTML -->
+	 			<span class="on">ON</span><span class="off">OFF</span><!--END--></div>
+	 			</label>
+	 			<p style="font-size:200%;">LED 2</p>
+
+		</div>
+        </div>
+      	</div>
+        	<div class="col-sm-12">
+          		<div class="slidecontainer">
+	 				<input type="range" min="0" max="255" value="50" id="myRange" onchange="updateSlider(this.value)">
+	 				<p style="font-size:200%;">Brightness</p>
+	 		</div>
+        	</div>
+      </div>
+    </div>
+</div>
+<footer class="container-fluid text-center">
+  <p style="font-size:200%;">©Create By Tran Quang Huy</p>
+</footer>
+
+</body>
+</html>
+
