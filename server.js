@@ -160,7 +160,7 @@ io.on('connection', (socket) => {
 				console.log(value.Humidity);
 				console.log(value.Illumination);
 				console.log(m_time);
-				io.sockets.emit('temp', {time:time, P2_5:P2_5, hum:a.Humidity,CO:CO, SO2:SO2, temp:a.Temperature});
+				io.sockets.emit('temp', {time:m_time, P2_5:value.P2_5, hum:value.Humidity,CO:value.CO, SO2:value.SO2, temp:value.Temperature});
 		});
 	});
 });
