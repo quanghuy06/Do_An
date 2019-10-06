@@ -116,18 +116,29 @@ client.on("connect", function() {
 	client.subscribe("DHT11")
 });
 var CO = 0;
+var SO2 = 0;
+var P2_5 = 0;
 function push_data(){
-	connection.query('SELECT * FROM SENSORS ORDER BY id DESC limit 2')
+	connection.query('SELECT * FROM SENSORS ORDER BY id DESC limit 10')
 		.then(row => {
 			row.forEach(function(value) {
 				var m_time = value.Date_and_Time.toString().slice(4,24);
 				console.log(value.CO);
 				CO = CO + value.CO;
-
+				SO2 = SO2 + value.SO2;
+				P2_5 = P2_5 + value.P2_5;
 				//io.sockets.emit('temp', {time:m_time, P2_5:value.P2_5, hum:value.Humidity,CO:value.CO, SO2:value.SO2, temp:value.Temperature});
 			});
-			console.log(CO)
+			var CO_data = parseInt(((CO/10) / 40)*100);
+			console.log("gia tri AQI: ");
+			console.log(CO_data);
+			var SO2_data = parseInt(((SO2/10) / 0.5)*100);
+			console.log(SO2_data);
+			var P2_5_data= parseInt(((P2_5/10) / 0.3)*100);
+			console.log(P2_5_data);
 			CO = 0;
+			SO2 = 0;
+			P2_5 = 0;
 			console.log(CO)
 			
 	});
