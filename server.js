@@ -123,8 +123,11 @@ function push_data(){
 				var m_time = value.Date_and_Time.toString().slice(4,24);
 				console.log(value.CO);
 				CO = CO + value.CO;
+
 				//io.sockets.emit('temp', {time:m_time, P2_5:value.P2_5, hum:value.Humidity,CO:value.CO, SO2:value.SO2, temp:value.Temperature});
 			});
+			console.log(CO)
+			CO = 0;
 			console.log(CO)
 			
 	});
