@@ -12,6 +12,7 @@ app.set('view engine', 'html');
 app.set('views', __dirname);
 app.engine('html', require('ejs').renderFile);
 
+
 var client = mqtt.connect("mqtt://localhost:1883", {username:"huytq",password:"quanghuy@123"});
 console.log("connected flag " + client.connected);
 
@@ -127,10 +128,8 @@ function push_data(){
 		});
 	});
 }
-while(true){
-	push_data();
-	setTimeout(push_data, 3000);
-}
+push_data();
+setInterval(push_data, 3000);
 
 // client.on("message", function(topic, message) {
 // 	//var Temp;
