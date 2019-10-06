@@ -130,34 +130,34 @@ function push_data(){
 push_data();
 setInterval(push_data, 5000);
 
-// client.on("message", function(topic, message) {
-// 	//var Temp;
-// 	//var Hum;
-// 	//var Illumination;
-// 	var i=0;
-// 	if(message != "") {
-// 		console.log(i);
-// 		i++;
-// 		console.log(i);
-// 		console.log("topic is: " + topic);
-// 		console.log("message is: " + message);
-// 		data = message.toString();
-// 		a = JSON.parse(data);
-// 		var CO = parseInt((a.CO / 40)*100);
-// 		console.log("gia tri AQI: ");
-// 		console.log(CO);
-// 		var SO2= parseInt((a.SO2 / 0.5)*100);
-// 		console.log(SO2);
-// 		var P2_5= parseInt((a.P2_5 / 0.3)*100);
-// 		console.log(P2_5);
-// 		var time = new Date();
-// 		console.log("Date insert: " +time);
-// 		connection.query('INSERT INTO AQI(Temperature,Humidity,CO,SO2,P2_5,Date_and_Time) values(?,?,?,?,?,?)', [a.Temperature,a.Humidity, CO, SO2, P2_5,time]).then(conn => {
-// 		console.log("Inserted");
-// 		});
-// 		io.sockets.emit('temp', {time:time, P2_5:P2_5, hum:a.Humidity,CO:CO, SO2:SO2, temp:a.Temperature});	
-// 	}
-// });
+client.on("message", function(topic, message) {
+	//var Temp;
+	//var Hum;
+	//var Illumination;
+	var i=0;
+	if(message != "") {
+		console.log(i);
+		i++;
+		console.log(i);
+		console.log("topic is: " + topic);
+		console.log("message is: " + message);
+		data = message.toString();
+		a = JSON.parse(data);
+		var CO = parseInt((a.CO / 40)*100);
+		console.log("gia tri AQI: ");
+		console.log(CO);
+		var SO2= parseInt((a.SO2 / 0.5)*100);
+		console.log(SO2);
+		var P2_5= parseInt((a.P2_5 / 0.3)*100);
+		console.log(P2_5);
+		var time = new Date();
+		console.log("Date insert: " +time);
+		connection.query('INSERT INTO AQI(Temperature,Humidity,CO,SO2,P2_5,Date_and_Time) values(?,?,?,?,?,?)', [a.Temperature,a.Humidity, CO, SO2, P2_5,time]).then(conn => {
+		console.log("Inserted");
+		});
+		//io.sockets.emit('temp', {time:time, P2_5:P2_5, hum:a.Humidity,CO:CO, SO2:SO2, temp:a.Temperature});	
+	}
+});
 
 // io.on('connection', (socket) => {
 // 	console.log("Someone connectted")
