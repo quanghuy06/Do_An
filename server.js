@@ -141,7 +141,7 @@ function push_data(){
 			connection.query('INSERT INTO AQI(CO,SO2,P2_5,Date_and_Time) values(?,?,?,?)', [CO_data,SO2_data,P2_5_data,time]).then(conn => {
 			console.log("Inserted");
 			});
-			io.sockets.emit('temp', {time:m_time, P2_5:P2_5_data,CO:CO_data, SO2:SO2_data});
+			io.sockets.emit('temp', {time:time, P2_5:P2_5_data,CO:CO_data, SO2:SO2_data});
 
 			CO = 0;
 			SO2 = 0;
