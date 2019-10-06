@@ -93,9 +93,7 @@ app.post('/auth', function(request, response) {
 
 app.get('/home', (request, response) => {
 	if (request.session.loggedin) {
-		connection.query("SELECT * FROM sensors").then(rows => {
 		response.sendFile(path.join(__dirname + '/index.html'));
-		});
 	}else {
 		response.send('Please login to view this page!!');
 		response.end();
@@ -151,25 +149,19 @@ client.on("message", function(topic, message) {
 		connection.query('INSERT INTO AQI(Temperature,Humidity,CO,SO2,P2_5,Date_and_Time) values(?,?,?,?,?,?)', [a.Temperature,a.Humidity, CO, SO2, P2_5,time]).then(conn => {
 		console.log("Inserted");
 		});
-		//io.sockets.emit('temp', {time:time, P2_5:P2_5, hum:a.Humidity,CO:CO, SO2:SO2, temp:a.Temperature});	
+		io.sockets.emit('temp', {time:time, P2_5:P2_5, hum:a.Humidity,CO:CO, SO2:SO2, temp:a.Temperature});	
 	}
 });
-sleep(5000, function() {
-	// body...
-// io.on('connection', (socket) => {
-// 	console.log("Someone connectted")
-	connection.query('SELECT * FROM AQI ORDER BY id DESC limit 1')
+
+io.on('connection', (socket) => {
+	console.log("Someone connectted")
+	connection.query('SELECT * FROM AQI')
 		.then(row => {
 			console.log("Databases: ");
 			console.log(row);
 			row.forEach(function(value) {
 				var m_time = value.Date_and_Time.toString().slice(4,24);
-				console.log(value.Temperature);
-				console.log(value.Humidity);
-				console.log(value.Illumination);
-				console.log(m_time);
 				io.sockets.emit('temp', {time:m_time, P2_5:value.P2_5, hum:value.Humidity,CO:value.CO, SO2:value.SO2, temp:value.Temperature});
 		});
 	});
-//});
-}
+});
