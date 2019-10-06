@@ -93,7 +93,9 @@ app.post('/auth', function(request, response) {
 
 app.get('/home', (request, response) => {
 	if (request.session.loggedin) {
+		connection.query("SELECT * FROM sensors").then(rows => {
 		response.sendFile(path.join(__dirname + '/index.html'));
+		});
 	}else {
 		response.send('Please login to view this page!!');
 		response.end();
