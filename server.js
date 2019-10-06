@@ -115,7 +115,7 @@ function publish(topic,msg){
 client.on("connect", function() {
 	client.subscribe("DHT11")
 });
-var CO;
+var CO = 0;
 function push_data(){
 	connection.query('SELECT * FROM SENSORS ORDER BY id DESC limit 2')
 		.then(row => {
