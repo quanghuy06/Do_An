@@ -101,14 +101,6 @@ app.get('/home', (request, response) => {
 	
 })
 
-function sleep(time, callback) {
-	var stop = new Date().getTime();
-	while(new Date().getTime() < stop +time) {
-		;
-	}
-	callback();
-}
-
 //Bind socket.io to our express server
 var io = require('socket.io')(server);
 
@@ -123,18 +115,20 @@ client.on("connect", function() {
 	client.subscribe("DHT11")
 });
 
-sleep(5000, function(){
+function push_data(){
 	connection.query('SELECT * FROM AQI ORDER BY id DESC limit 1')
 		.then(row => {
 			console.log("Databases after 5s: ");
-			console.log(row);
-		// 	row.forEach(function(value) {
-	
-		// 		//var m_time = value.Date_and_Time.toString().slice(4,24);
-		// 		//io.sockets.emit('temp', {time:m_time, P2_5:value.P2_5, hum:value.Humidity,CO:value.CO, SO2:value.SO2, temp:value.Temperature});
-		// });
+			//console.log(row);
+			row.forEach(function(value) {
+				console.log(P2_5:value.P2_5);
+				//var m_time = value.Date_and_Time.toString().slice(4,24);
+				//io.sockets.emit('temp', {time:m_time, P2_5:value.P2_5, hum:value.Humidity,CO:value.CO, SO2:value.SO2, temp:value.Temperature});
+		});
 	});
-});
+}
+push_data();
+setTimeout(delay, 3000);
 
 // client.on("message", function(topic, message) {
 // 	//var Temp;
