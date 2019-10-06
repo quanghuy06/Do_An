@@ -115,20 +115,20 @@ function publish(topic,msg){
 client.on("connect", function() {
 	client.subscribe("DHT11")
 });
-
+var CO;
 function push_data(){
-	connection.query('SELECT * FROM AQI ORDER BY id DESC limit 1')
+	connection.query('SELECT * FROM SENSORS ORDER BY id DESC limit 2')
 		.then(row => {
-			console.log("Databases after 5s: ");
-			//console.log(row);
 			row.forEach(function(value) {
 				var m_time = value.Date_and_Time.toString().slice(4,24);
-				io.sockets.emit('temp', {time:m_time, P2_5:value.P2_5, hum:value.Humidity,CO:value.CO, SO2:value.SO2, temp:value.Temperature});
-		});
+				var CO += parseInt(a.CO);
+				//io.sockets.emit('temp', {time:m_time, P2_5:value.P2_5, hum:value.Humidity,CO:value.CO, SO2:value.SO2, temp:value.Temperature});
+			});
+			console.log(CO);
 	});
 }
 push_data();
-setInterval(push_data, 5000);
+setInterval(push_data, 5000)
 
 client.on("message", function(topic, message) {
 	//var Temp;
@@ -143,31 +143,31 @@ client.on("message", function(topic, message) {
 		console.log("message is: " + message);
 		data = message.toString();
 		a = JSON.parse(data);
-		var CO = parseInt((a.CO / 40)*100);
-		console.log("gia tri AQI: ");
-		console.log(CO);
-		var SO2= parseInt((a.SO2 / 0.5)*100);
-		console.log(SO2);
-		var P2_5= parseInt((a.P2_5 / 0.3)*100);
-		console.log(P2_5);
+		// var CO = parseInt((a.CO / 40)*100);
+		// console.log("gia tri AQI: ");
+		// console.log(CO);
+		// var SO2= parseInt((a.SO2 / 0.5)*100);
+		// console.log(SO2);
+		// var P2_5= parseInt((a.P2_5 / 0.3)*100);
+		// console.log(P2_5);
 		var time = new Date();
 		console.log("Date insert: " +time);
-		connection.query('INSERT INTO AQI(Temperature,Humidity,CO,SO2,P2_5,Date_and_Time) values(?,?,?,?,?,?)', [a.Temperature,a.Humidity, CO, SO2, P2_5,time]).then(conn => {
+		connection.query('INSERT INTO SENSORS(Temperature,Humidity,CO,SO2,P2_5,Date_and_Time) values(?,?,?,?,?,?)', [a.Temperature,a.Humidity,a.CO,a.SO2,a.P2_5,time]).then(conn => {
 		console.log("Inserted");
 		});
-		//io.sockets.emit('temp', {time:time, P2_5:P2_5, hum:a.Humidity,CO:CO, SO2:SO2, temp:a.Temperature});	
+		io.sockets.emit('temp_hum', {hum:a.Humidity,temp:a.Temperature});	
 	}
 });
 
-// io.on('connection', (socket) => {
-// 	console.log("Someone connectted")
-// 	connection.query('SELECT * FROM AQI')
-// 		.then(row => {
-// 			console.log("Databases: ");
-// 			console.log(row);
-// 			row.forEach(function(value) {
-// 				var m_time = value.Date_and_Time.toString().slice(4,24);
-// 				io.sockets.emit('temp', {time:m_time, P2_5:value.P2_5, hum:value.Humidity,CO:value.CO, SO2:value.SO2, temp:value.Temperature});
-// 		});
-// 	});
-// });
+io.on('connection', (socket) => {
+	console.log("Someone connectted")
+	connection.query('SELECT * FROM AQI')
+		.then(row => {
+			console.log("Databases: ");
+			console.log(row);
+			row.forEach(function(value) {
+				var m_time = value.Date_and_Time.toString().slice(4,24);
+				io.sockets.emit('temp', {time:m_time, P2_5:value.P2_5, hum:value.Humidity,CO:value.CO, SO2:value.SO2, temp:value.Temperature});
+		});
+	});
+});

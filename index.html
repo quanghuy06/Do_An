@@ -152,65 +152,61 @@
                 options: {}
                 
             });
-			
-            socket.on('temp', function(data) { //As a temp data is received 
-		console.log(data.time);
-                console.log(data.temp);
-				// nhiet do , do am , anh sang 
-				var my_data = [data.P2_5 , data.CO, data.SO2, data.temp ];
-				console.log(my_data);
-				var index = 0;
-				
-                document.getElementById('temperature').innerHTML = data.temp; //update the date
-                if(data.temp < 30){
-                	document.getElementById('temperature').style.backgroundColor = '#f7c80c';
+			      socket.on('temp_hum', function(value){
+                document.getElementById('temperature').innerHTML = value.temp; //update the date
+                if(value.temp < 30){
+                  document.getElementById('temperature').style.backgroundColor = '#f7c80c';
                 } 
-                if(data.temp >= 30){
-                	document.getElementById('temperature').style.backgroundColor = 'coral';
+                if(value.temp >= 30){
+                  document.getElementById('temperature').style.backgroundColor = 'coral';
                 } 
-                document.getElementById('humidity').innerHTML = data.hum; //update the date
-                if(data.hum < 65){
-                	document.getElementById('humidity').style.backgroundColor = '#c4c2bc';
+                document.getElementById('humidity').innerHTML = value.hum; //update the date
+                if(value.hum < 65){
+                  document.getElementById('humidity').style.backgroundColor = '#c4c2bc';
                 }
-                if(data.hum > 65 && data.hum < 80){
-                	document.getElementById('humidity').style.backgroundColor = '#79eaea';
+                if(value.hum > 65 && value.hum < 80){
+                  document.getElementById('humidity').style.backgroundColor = '#79eaea';
                 }
-                if(data.hum > 80){
-                	document.getElementById('humidity').style.backgroundColor = '#0d8ac4';
+                if(value.hum > 80){
+                  document.getElementById('humidity').style.backgroundColor = '#0d8ac4';
                 }
-                document.getElementById('CO').innerHTML = data.CO; //update the date
-                if(data.CO < 30){
-                	document.getElementById('CO').style.backgroundColor = '#F2F5A9';
-                }
-                if(data.CO > 30 && data.CO < 50){
-                	document.getElementById('CO').style.backgroundColor = '#F4FA58';
-                }
-                if(data.CO > 100){
-                	document.getElementById('CO').style.backgroundColor = '#FFFF00';
-                }
-                document.getElementById('SO2').innerHTML = data.SO2;
-                document.getElementById('P2_5').innerHTML = data.P2_5;
-                
-                if(chart.data.labels.length != 20) { //If we have less than 15 data points in the graph
-                    chart.data.labels.push(data.time);  //Add time in x-asix
-                    chart.data.datasets.forEach((dataset) => {
-                        dataset.data.push(my_data[index]); //Add temp in y-axis
-						console.log(index);
-						index ++;
-                    });
-                }
-                else { //If there are already 15 data points in the graph.
-                    chart.data.labels.shift(); //Remove first time data
-                    chart.data.labels.push(data.time); //Insert latest time data
-                    chart.data.datasets.forEach((dataset) => {
-                        dataset.data.shift(); //Remove first temp data
-                        dataset.data.push(my_data[index]); //Insert latest temp data
-						index ++;
-                    });
-                }
-                chart.update(); //Update the graph.
             });
-
+            socket.on('temp', function(data) { //As a temp data is received 
+        				var my_data = [data.P2_5 , data.CO, data.SO2];
+        				console.log(my_data);
+        				var index = 0;
+                        document.getElementById('CO').innerHTML = data.CO; //update the date
+                        if(data.CO < 30){
+                        	document.getElementById('CO').style.backgroundColor = '#F2F5A9';
+                        }
+                        if(data.CO > 30 && data.CO < 50){
+                        	document.getElementById('CO').style.backgroundColor = '#F4FA58';
+                        }
+                        if(data.CO > 100){
+                        	document.getElementById('CO').style.backgroundColor = '#FFFF00';
+                        }
+                        document.getElementById('SO2').innerHTML = data.SO2;
+                        document.getElementById('P2_5').innerHTML = data.P2_5;
+                        
+                        if(chart.data.labels.length != 20) { //If we have less than 15 data points in the graph
+                            chart.data.labels.push(data.time);  //Add time in x-asix
+                            chart.data.datasets.forEach((dataset) => {
+                                dataset.data.push(my_data[index]); //Add temp in y-axis
+        						            console.log(index);
+        						            index ++;
+                            });
+                        }
+                        else { //If there are already 15 data points in the graph.
+                            chart.data.labels.shift(); //Remove first time data
+                            chart.data.labels.push(data.time); //Insert latest time data
+                            chart.data.datasets.forEach((dataset) => {
+                                dataset.data.shift(); //Remove first temp data
+                                dataset.data.push(my_data[index]); //Insert latest temp data
+        						            index ++;
+                            });
+                        }
+                        chart.update(); //Update the graph.
+            });
         </script>
       </div>
      </div>
