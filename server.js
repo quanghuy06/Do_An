@@ -121,7 +121,7 @@ function push_data(){
 			console.log("Databases after 5s: ");
 			//console.log(row);
 			row.forEach(function(value) {
-				console.log(P2_5:value.P2_5);
+				console.log(value.P2_5);
 				//var m_time = value.Date_and_Time.toString().slice(4,24);
 				//io.sockets.emit('temp', {time:m_time, P2_5:value.P2_5, hum:value.Humidity,CO:value.CO, SO2:value.SO2, temp:value.Temperature});
 		});
