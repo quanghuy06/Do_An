@@ -69,10 +69,10 @@
             <div id="hum" class="col-sm-1" style=" border-top: solid;border-right: solid;">
               <img src="https://cdn4.iconfinder.com/data/icons/autumn-24/32/thermometer-autumn-humidity-fall-rain-temperature-measure-512.png"  width="100p" height="100">
             </div>
-            <div id="hum" class="col-sm-3" style="border-top: solid;">
-              <center style="font-size:300%;">AQI<p id='humidity' >0</p></center>
+            <div id="aqi" class="col-sm-3" style="border-top: solid;">
+              <center style="font-size:300%;">AQI<p id='AQI' >0</p></center>
             </div>
-            <div id="hum" class="col-sm-1" style=" border-top: solid;border-right: solid;">
+            <div id="aqi" class="col-sm-1" style=" border-top: solid;border-right: solid;">
               <img src="https://www.pca.state.mn.us/sites/default/files/aqi-icon-airdata.png"  width="90p" height="90" style="margin-top: 7px">
             </div>
       </div>
@@ -172,9 +172,12 @@
                 }
             });
             socket.on('temp', function(data) { //As a temp data is received 
-        				var my_data = [data.P2_5 , data.CO, data.SO2];
+        				
+                var my_data = [data.P2_5 , data.CO, data.SO2];
+                var AIQ_max = Math.max.apply(Math, my_data);
         				console.log(my_data);
         				var index = 0;
+                        document.getElementById('AIQ').innerHTML = AIQ_max;
                         document.getElementById('CO').innerHTML = data.CO; //update the date
                         if(data.CO < 30){
                         	document.getElementById('CO').style.backgroundColor = '#F2F5A9';
