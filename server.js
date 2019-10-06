@@ -127,8 +127,10 @@ function push_data(){
 		});
 	});
 }
-push_data();
-setTimeout(push_data, 3000);
+while(true){
+	push_data();
+	setTimeout(push_data, 3000);
+}
 
 // client.on("message", function(topic, message) {
 // 	//var Temp;
