@@ -124,6 +124,8 @@ function push_data(){
 				console.log(value.CO);
 				//io.sockets.emit('temp', {time:m_time, P2_5:value.P2_5, hum:value.Humidity,CO:value.CO, SO2:value.SO2, temp:value.Temperature});
 			});
+			CO = CO + value.CO;
+			console.log(CO)
 			
 	});
 }
