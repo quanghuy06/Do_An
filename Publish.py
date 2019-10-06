@@ -49,7 +49,7 @@ def publish_Values_to_MQTT():
     Sensor_json_data = json.dumps(Sensor_data)
     print("Publishing Value: ")
     publish_To_Topic(MQTT_Topic, Sensor_json_data)
-    sleep(30)
+    sleep(5)
 
 while True:
     publish_Values_to_MQTT()
