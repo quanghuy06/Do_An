@@ -174,10 +174,16 @@
             socket.on('temp', function(data) { //As a temp data is received 
         				
                 var my_data = [data.P2_5 , data.CO, data.SO2];
-                var AIQ_max = Math.max.apply(Math, my_data);
+                var AQI_max = my_data[0];
+                for(var i = 0; i<=2;i++)
+                {
+                  if(AIQ_max < my_data[i]){
+                    AIQ_max = my_data[i];
+                  }
+                }
         				console.log(my_data);
         				var index = 0;
-                        document.getElementById('AIQ').innerHTML = AIQ_max;
+                        document.getElementById('AQI').innerHTML = AQI_max;
                         document.getElementById('CO').innerHTML = data.CO; //update the date
                         if(data.CO < 30){
                         	document.getElementById('CO').style.backgroundColor = '#F2F5A9';
