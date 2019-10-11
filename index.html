@@ -185,22 +185,22 @@
         				console.log(my_data);
         				var index = 0;
                 document.getElementById('AQI').innerHTML = AQI_max;
-                if(data.AQI <= 50){
+                if(AQI_max <= 50){
                   document.getElementById('AQI').style.backgroundColor = '#2ee82e';
                 }
-                if(data.AQI > 50 && data.AQI <= 100){
+                if(AQI_max > 50 && AQI_max <= 100){
                   document.getElementById('AQI').style.backgroundColor = '#FFFF00';
                 }
-                if(data.AQI > 100 && data.AQI <= 150){
+                if(AQI_max > 100 && AQI_max <= 150){
                   document.getElementById('AQI').style.backgroundColor = '#e87912';
                 }
-                if(data.AQI > 150 && data.AQI <= 200){
+                if(AQI_max > 150 && AQI_max <= 200){
                   document.getElementById('AQI').style.backgroundColor = '#e20909';
                 }
-                if(data.AQI > 200 && data.AQI <= 300){
+                if(AQI_max > 200 && AQI_max <= 300){
                   document.getElementById('AQI').style.backgroundColor = '#8008d6';
                 }
-                if(data.AQI > 300){
+                if(AQI_max > 300){
                   document.getElementById('AQI').style.backgroundColor = '#77224b';
                 }
                 document.getElementById('CO').innerHTML = data.CO; //update the date
