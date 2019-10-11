@@ -175,47 +175,110 @@
         				
                 var my_data = [data.P2_5 , data.CO, data.SO2];
                 var AQI_max = my_data[0];
-                for(var i = 0; i<=2;i++)
+                for(var i = 0; i<=2; i++)
                	{
                    if(AQI_max < my_data[i]){
                      AQI_max = my_data[i];
                    }
                 }
-		    console.log(AQI_max);
+		            console.log(AQI_max);
         				console.log(my_data);
         				var index = 0;
-                        document.getElementById('AQI').innerHTML = AQI_max;
-                        document.getElementById('CO').innerHTML = data.CO; //update the date
-                        if(data.CO < 30){
-                        	document.getElementById('CO').style.backgroundColor = '#F2F5A9';
-                        }
-                        if(data.CO > 30 && data.CO < 50){
-                        	document.getElementById('CO').style.backgroundColor = '#F4FA58';
-                        }
-                        if(data.CO > 100){
-                        	document.getElementById('CO').style.backgroundColor = '#FFFF00';
-                        }
-                        document.getElementById('SO2').innerHTML = data.SO2;
-                        document.getElementById('P2_5').innerHTML = data.P2_5;
-                        
-                        if(chart.data.labels.length != 20) { //If we have less than 15 data points in the graph
-                            chart.data.labels.push(data.time);  //Add time in x-asix
-                            chart.data.datasets.forEach((dataset) => {
-                                dataset.data.push(my_data[index]); //Add temp in y-axis
-        						            console.log(index);
-        						            index ++;
-                            });
-                        }
-                        else { //If there are already 15 data points in the graph.
-                            chart.data.labels.shift(); //Remove first time data
-                            chart.data.labels.push(data.time); //Insert latest time data
-                            chart.data.datasets.forEach((dataset) => {
-                                dataset.data.shift(); //Remove first temp data
-                                dataset.data.push(my_data[index]); //Insert latest temp data
-        						            index ++;
-                            });
-                        }
-                        chart.update(); //Update the graph.
+                document.getElementById('AQI').innerHTML = AQI_max;
+                if(data.AQI <= 50){
+                  document.getElementById('AQI').style.backgroundColor = '#2ee82e';
+                }
+                if(data.AQI > 50 && data.AQI <= 100){
+                  document.getElementById('AQI').style.backgroundColor = '#FFFF00';
+                }
+                if(data.AQI > 100 && data.AQI <= 150){
+                  document.getElementById('AQI').style.backgroundColor = '#e87912';
+                }
+                if(data.AQI > 150 && data.AQI <= 200){
+                  document.getElementById('AQI').style.backgroundColor = '#e20909';
+                }
+                if(data.AQI > 200 && data.AQI <= 300){
+                  document.getElementById('AQI').style.backgroundColor = '#8008d6';
+                }
+                if(data.AQI > 300){
+                  document.getElementById('AQI').style.backgroundColor = '#77224b';
+                }
+                document.getElementById('CO').innerHTML = data.CO; //update the date
+                if(data.CO <= 50){
+                	document.getElementById('CO').style.backgroundColor = '#2ee82e';
+                }
+                if(data.CO > 50 && data.CO <= 100){
+                	document.getElementById('CO').style.backgroundColor = '#FFFF00';
+                }
+                if(data.CO > 100 && data.CO <= 150){
+                	document.getElementById('CO').style.backgroundColor = '#e87912';
+                }
+                if(data.CO > 150 && data.CO <= 200){
+                  document.getElementById('CO').style.backgroundColor = '#e20909';
+                }
+                if(data.CO > 200 && data.CO <= 300){
+                  document.getElementById('CO').style.backgroundColor = '#8008d6';
+                }
+                if(data.CO > 300){
+                  document.getElementById('CO').style.backgroundColor = '#77224b';
+                }
+                document.getElementById('SO2').innerHTML = data.SO2;
+                if(data.SO2 <= 50){
+                  document.getElementById('SO2').style.backgroundColor = '#2ee82e';
+                }
+                if(data.SO2 > 50 && data.SO2 <= 100){
+                  document.getElementById('SO2').style.backgroundColor = '#FFFF00';
+                }
+                if(data.SO2 > 100 && data.SO2 <= 150){
+                  document.getElementById('SO2').style.backgroundColor = '#e87912';
+                }
+                if(data.SO2 > 150 && data.SO2 <= 200){
+                  document.getElementById('SO2').style.backgroundColor = '#e20909';
+                }
+                if(data.SO2 > 200 && data.SO2 <= 300){
+                  document.getElementById('SO2').style.backgroundColor = '#8008d6';
+                }
+                if(data.SO2 > 300){
+                  document.getElementById('SO2').style.backgroundColor = '#77224b';
+                }
+                document.getElementById('P2_5').innerHTML = data.P2_5;
+                if(data.P2_5 <= 50){
+                  document.getElementById('P2_5').style.backgroundColor = '#2ee82e';
+                }
+                if(data.P2_5 > 50 && data.P2_5 <= 100){
+                  document.getElementById('P2_5').style.backgroundColor = '#FFFF00';
+                }
+                if(data.P2_5 > 100 && data.P2_5 <= 150){
+                  document.getElementById('P2_5').style.backgroundColor = '#e87912';
+                }
+                if(data.P2_5 > 150 && data.P2_5 <= 200){
+                  document.getElementById('P2_5').style.backgroundColor = '#e20909';
+                }
+                if(data.P2_5 > 200 && data.P2_5 <= 300){
+                  document.getElementById('P2_5').style.backgroundColor = '#8008d6';
+                }
+                if(data.P2_5 > 300){
+                  document.getElementById('P2_5').style.backgroundColor = '#77224b';
+                }
+                
+                if(chart.data.labels.length != 20) { //If we have less than 15 data points in the graph
+                    chart.data.labels.push(data.time);  //Add time in x-asix
+                    chart.data.datasets.forEach((dataset) => {
+                        dataset.data.push(my_data[index]); //Add temp in y-axis
+						            console.log(index);
+						            index ++;
+                    });
+                }
+                else { //If there are already 15 data points in the graph.
+                    chart.data.labels.shift(); //Remove first time data
+                    chart.data.labels.push(data.time); //Insert latest time data
+                    chart.data.datasets.forEach((dataset) => {
+                        dataset.data.shift(); //Remove first temp data
+                        dataset.data.push(my_data[index]); //Insert latest temp data
+						            index ++;
+                    });
+                }
+                chart.update(); //Update the graph.
             });
         </script>
       </div>
