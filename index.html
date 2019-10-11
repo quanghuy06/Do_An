@@ -71,6 +71,7 @@
             </div>
             <div id="aqi" class="col-sm-3" style="border-top: solid;">
               <center style="font-size:300%;">AQI<p id='AQI' >0</p></center>
+              <center style="font-size:200%;"><p id='AQI_status' ></p></center>
             </div>
             <div id="aqi" class="col-sm-1" style=" border-top: solid;border-right: solid;">
               <img src="https://www.pca.state.mn.us/sites/default/files/aqi-icon-airdata.png"  width="90p" height="90" style="margin-top: 7px">
@@ -81,7 +82,6 @@
     	<div class="row">
         	  <div id="pm25" class="col-sm-3" style="border-left: solid; border-top: solid;">
             	<center style="font-size:300%;">PM2.5<p id='P2_5' >0</p></center>
-              <center style="font-size:300%;"><p id='status_P25' ></p></center>
             </div>
             <div id="pm25" class="col-sm-1" style=" border-top: solid;">
             	<img src="https://cdn1.iconfinder.com/data/icons/dust-1/500/dust-13-512.png"  width="90p" height="100">
@@ -188,21 +188,33 @@
                 document.getElementById('AQI').innerHTML = AQI_max;
                 if(AQI_max <= 50){
                   document.getElementById('AQI').style.backgroundColor = '#2ee82e';
+                  document.getElementById('AQI_status').innerHTML = 'Good';
+                  document.getElementById('AQI_status').style.backgroundColor = '#2ee82e';
                 }
                 if(AQI_max > 50 && AQI_max <= 100){
                   document.getElementById('AQI').style.backgroundColor = '#FFFF00';
+                  document.getElementById('AQI_status').innerHTML = 'Moderate';
+                  document.getElementById('AQI_status').style.backgroundColor = '#FFFF00';
                 }
                 if(AQI_max > 100 && AQI_max <= 150){
                   document.getElementById('AQI').style.backgroundColor = '#e87912';
+                  document.getElementById('AQI_status').innerHTML = 'Unhealthy For Sensitive Group';
+                  document.getElementById('AQI_status').style.backgroundColor = '#e87912';
                 }
                 if(AQI_max > 150 && AQI_max <= 200){
                   document.getElementById('AQI').style.backgroundColor = '#e20909';
+                  document.getElementById('AQI_status').innerHTML = 'Unhealthy';
+                  document.getElementById('AQI_status').style.backgroundColor = '#e20909';
                 }
                 if(AQI_max > 200 && AQI_max <= 300){
                   document.getElementById('AQI').style.backgroundColor = '#8008d6';
+                  document.getElementById('AQI_status').innerHTML = 'Very Unhealthy';
+                  document.getElementById('AQI_status').style.backgroundColor = '#8008d6';
                 }
                 if(AQI_max > 300){
                   document.getElementById('AQI').style.backgroundColor = '#77224b';
+                  document.getElementById('AQI_status').innerHTML = 'Hazadrous';
+                  document.getElementById('AQI_status').style.backgroundColor = '#77224b';
                 }
                 document.getElementById('CO').innerHTML = data.CO; //update the date
                 if(data.CO <= 50){
@@ -245,27 +257,21 @@
                 document.getElementById('P2_5').innerHTML = data.P2_5;
                 if(data.P2_5 <= 50){
                   document.getElementById('P2_5').style.backgroundColor = '#2ee82e';
-                  document.getElementById('status_P25').innerHTML = 'Good';
                 }
                 if(data.P2_5 > 50 && data.P2_5 <= 100){
                   document.getElementById('P2_5').style.backgroundColor = '#FFFF00';
-                  document.getElementById('status_P25').innerHTML = 'Moderate';
                 }
                 if(data.P2_5 > 100 && data.P2_5 <= 150){
                   document.getElementById('P2_5').style.backgroundColor = '#e87912';
-                  document.getElementById('status_P25').innerHTML = 'Unhealthy for sensitive';
                 }
                 if(data.P2_5 > 150 && data.P2_5 <= 200){
                   document.getElementById('P2_5').style.backgroundColor = '#e20909';
-                  document.getElementById('status_P25').innerHTML = 'Unhealthy';
                 }
                 if(data.P2_5 > 200 && data.P2_5 <= 300){
                   document.getElementById('P2_5').style.backgroundColor = '#8008d6';
-                  document.getElementById('status_P25').innerHTML = 'Very Unhealthy';
                 }
                 if(data.P2_5 > 300){
                   document.getElementById('P2_5').style.backgroundColor = '#77224b';
-                  document.getElementById('status_P25').innerHTML = 'Hazadrous';
                 }
                 
                 if(chart.data.labels.length != 20) { //If we have less than 15 data points in the graph
