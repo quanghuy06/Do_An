@@ -81,6 +81,7 @@
     	<div class="row">
         	  <div id="pm25" class="col-sm-3" style="border-left: solid; border-top: solid;">
             	<center style="font-size:300%;">PM2.5<p id='P2_5' >0</p></center>
+              <center style="font-size:300%;"><p id='status_P25' ></p></center>
             </div>
             <div id="pm25" class="col-sm-1" style=" border-top: solid;">
             	<img src="https://cdn1.iconfinder.com/data/icons/dust-1/500/dust-13-512.png"  width="90p" height="100">
@@ -244,21 +245,27 @@
                 document.getElementById('P2_5').innerHTML = data.P2_5;
                 if(data.P2_5 <= 50){
                   document.getElementById('P2_5').style.backgroundColor = '#2ee82e';
+                  document.getElementById('status_P25').innerHTML = 'Good';
                 }
                 if(data.P2_5 > 50 && data.P2_5 <= 100){
                   document.getElementById('P2_5').style.backgroundColor = '#FFFF00';
+                  document.getElementById('status_P25').innerHTML = 'Moderate';
                 }
                 if(data.P2_5 > 100 && data.P2_5 <= 150){
                   document.getElementById('P2_5').style.backgroundColor = '#e87912';
+                  document.getElementById('status_P25').innerHTML = 'Unhealthy for sensitive';
                 }
                 if(data.P2_5 > 150 && data.P2_5 <= 200){
                   document.getElementById('P2_5').style.backgroundColor = '#e20909';
+                  document.getElementById('status_P25').innerHTML = 'Unhealthy';
                 }
                 if(data.P2_5 > 200 && data.P2_5 <= 300){
                   document.getElementById('P2_5').style.backgroundColor = '#8008d6';
+                  document.getElementById('status_P25').innerHTML = 'Very Unhealthy';
                 }
                 if(data.P2_5 > 300){
                   document.getElementById('P2_5').style.backgroundColor = '#77224b';
+                  document.getElementById('status_P25').innerHTML = 'Hazadrous';
                 }
                 
                 if(chart.data.labels.length != 20) { //If we have less than 15 data points in the graph
