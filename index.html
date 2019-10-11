@@ -174,14 +174,14 @@
             socket.on('temp', function(data) { //As a temp data is received 
         				
                 var my_data = [data.P2_5 , data.CO, data.SO2];
-                // var AQI_max = my_data[0];
-                console.log(my_data[0]);
-                // for(var i = 0; i<=2;i++)
-                // {
-                //   if(AIQ_max < my_data[i]){
-                //     AIQ_max = my_data[i];
-                //   }
-                // }
+                var AQI_max = my_data[0];
+                for(var i = 0; i<=2;i++)
+               	{
+                   if(AQI_max < my_data[i]){
+                     AQI_max = my_data[i];
+                   }
+                }
+		    console.log(AQI_max);
         				console.log(my_data);
         				var index = 0;
                         document.getElementById('AQI').innerHTML = AQI_max;
