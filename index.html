@@ -166,9 +166,28 @@
                   document.getElementById('humidity').style.backgroundColor = '#0d8ac4';
                 }
             });
+            socket.on('temp_hum1', function(value){
+                document.getElementById('temperature1').innerHTML = value.temp; //update the date
+                if(value.temp < 30){
+                  document.getElementById('temperature1').style.backgroundColor = '#f7c80c';
+                } 
+                if(value.temp >= 30){
+                  document.getElementById('temperature1').style.backgroundColor = 'coral';
+                } 
+                document.getElementById('humidity1').innerHTML = value.hum; //update the date
+                if(value.hum < 65){
+                  document.getElementById('humidity1').style.backgroundColor = '#c4c2bc';
+                }
+                if(value.hum > 65 && value.hum < 80){
+                  document.getElementById('humidity1').style.backgroundColor = '#79eaea';
+                }
+                if(value.hum > 80){
+                  document.getElementById('humidity1').style.backgroundColor = '#0d8ac4';
+                }
+            });
             socket.on('temp', function(data) { //As a temp data is received 
                 var my_data = [data.P2_5, data.P2_5_out];
-        				console.log(my_data);
+        				console.log(data);
         				var index = 0;
                 document.getElementById('AQI').innerHTML = data.P2_5;
                 if(data.P2_5 <= 50){
