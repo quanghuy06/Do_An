@@ -41,7 +41,7 @@ def publish_Values_to_MQTT():
     Sensor_data = {}
     Sensor_data['Temperature'] = temp
     Sensor_data['Humidity'] = hum
-    Sensor_data['P2_5'] = P2_5
+    Sensor_data['PM2_5'] = P2_5
     Sensor_json_data = json.dumps(Sensor_data)
     print("Publishing Value: ")
     publish_To_Topic(MQTT_Topic, Sensor_json_data)
