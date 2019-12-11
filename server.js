@@ -113,7 +113,8 @@ function publish(topic,msg){
 }
  
 client.on("connect", function() {
-	client.subscribe("Sensor")
+	client.subscribe("Room")
+	client.subscribe("Outside")
 });
 var P2_5 = 0;
 function push_data(){
@@ -134,29 +135,51 @@ function push_data(){
 			io.sockets.emit('temp', {time:time, P2_5:P2_5_data});
 			P2_5 = 0;		
 	});
+	connection.query('SELECT * FROM SENSORS1 ORDER BY id DESC limit 10')
+		.then(row => {
+			row.forEach(function(value) {
+				var m_time = value.Date_Time.toString().slice(4,24);
+				P2_5 = P2_5 + value.PM2_5;
+				//io.sockets.emit('temp', {time:m_time, P2_5:value.P2_5, hum:value.Humidity,CO:value.CO, SO2:value.SO2, temp:value.Temperature});
+			});
+			var P2_5_data= parseInt(((P2_5/10) / 0.3)*100);
+			console.log(P2_5_data);
+			var time = new Date();
+			console.log("Date insert: " +time);
+			connection.query('INSERT INTO AQI1(PM2_5,Date_Time) values(?,?)', [P2_5_data,time]).then(conn => {
+			console.log("Inserted");
+			});
+			io.sockets.emit('temp1', {time:time, P2_5:P2_5_data});
+			P2_5 = 0;		
+	});
 }
 push_data();
 setInterval(push_data, 5000)
 
 client.on("message", function(topic, message) {
-	//var Temp;
-	//var Hum;
-	//var Illumination;
-	var i=0;
 	if(message != "") {
-		console.log(i);
-		i++;
-		console.log(i);
 		console.log("topic is: " + topic);
 		console.log("message is: " + message);
-		data = message.toString();
-		a = JSON.parse(data);
-		var time = new Date();
-		console.log("Date insert: " +time);
-		connection.query('INSERT INTO SENSORS(Temperature,Humidity,PM2_5,Date_Time) values(?,?,?,?)', [a.Temperature,a.Humidity,a.PM2_5,time]).then(conn => {
-		console.log("Inserted");
-		});
-		io.sockets.emit('temp_hum', {hum:a.Humidity,temp:a.Temperature});
+		if(topic == "Room"){
+			data = message.toString();
+			a = JSON.parse(data);
+			var time = new Date();
+			console.log("Date insert: " +time);
+			connection.query('INSERT INTO SENSORS(Temperature,Humidity,PM2_5,Date_Time) values(?,?,?,?)', [a.Temperature,a.Humidity,a.PM2_5,time]).then(conn => {
+			console.log("Inserted");
+			});
+			io.sockets.emit('temp_hum', {hum:a.Humidity,temp:a.Temperature});
+		}
+		if(topic == "Outside"){
+			data = message.toString();
+			a = JSON.parse(data);
+			var time = new Date();
+			console.log("Date insert: " +time);
+			connection.query('INSERT INTO SENSORS1(Temperature,Humidity,PM2_5,Date_Time) values(?,?,?,?)', [a.Temperature,a.Humidity,a.PM2_5,time]).then(conn => {
+			console.log("Inserted");
+			});
+			io.sockets.emit('temp_hum1', {hum:a.Humidity,temp:a.Temperature});
+		}
 	}
 });
 
@@ -169,6 +192,15 @@ io.on('connection', (socket) => {
 			row.forEach(function(value) {
 				var m_time = value.Date_Time.toString().slice(4,24);
 				io.sockets.emit('temp', {time:m_time, P2_5:value.PM2_5});
+		});
+	});
+	connection.query('SELECT * FROM AQI1')
+		.then(row => {
+			console.log("Databases: ");
+			console.log(row);
+			row.forEach(function(value) {
+				var m_time = value.Date_Time.toString().slice(4,24);
+				io.sockets.emit('temp1', {time:m_time, P2_5:value.PM2_5});
 		});
 	});
 });
