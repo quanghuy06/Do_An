@@ -161,6 +161,9 @@ function push_data(){
 		console.log("Date insert: " +time);
 		connection.query('INSERT INTO AQI_ALL(PM2_5,PM2_5_out,Date_Time) values(?,?,?)', [PM2_5_Room,PM2_5_outside,time]).then(conn => {
 		console.log("Inserted");
+		console.log("room: " + PM2_5_Room);
+		console.log("outside: "+ PM2_5_outside)
+
 	});
 	io.sockets.emit('temp', {time:time, P2_5:PM2_5_Room, P2_5_out:PM2_5_outside});
 }
