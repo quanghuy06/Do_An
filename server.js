@@ -191,16 +191,6 @@ io.on('connection', (socket) => {
 			console.log(row);
 			row.forEach(function(value) {
 				var m_time = value.Date_Time.toString().slice(4,24);
-				io.sockets.emit('temp', {time:m_time, P2_5:value.PM2_5});
-		});
-	});
-	connection.query('SELECT * FROM AQI1')
-		.then(row => {
-			console.log("Databases: ");
-			console.log(row);
-			row.forEach(function(value) {
-				var m_time = value.Date_Time.toString().slice(4,24);
-				io.sockets.emit('temp1', {time:m_time, P2_5:value.PM2_5});
 		});
 	});
 });
