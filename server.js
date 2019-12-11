@@ -117,7 +117,7 @@ client.on("connect", function() {
 	client.subscribe("Outside")
 });
 var P2_5 = 0;
-var PM2_5_out = 0
+var P2_5_out = 0
 function push_data(){
 	var PM2_5_Room = 0;
 	var PM2_5_outside = 0;
