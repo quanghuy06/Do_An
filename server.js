@@ -128,7 +128,7 @@ function push_data(){
 			console.log(P2_5_data);
 			var time = new Date();
 			console.log("Date insert: " +time);
-			connection.query('INSERT INTO AQI(P2_5,Date_Time) values(?,?)', [CO_data,SO2_data,P2_5_data,time]).then(conn => {
+			connection.query('INSERT INTO AQI(PM2_5,Date_Time) values(?,?)', [CO_data,SO2_data,P2_5_data,time]).then(conn => {
 			console.log("Inserted");
 			});
 			io.sockets.emit('temp', {time:time, P2_5:P2_5_data});
@@ -153,7 +153,7 @@ client.on("message", function(topic, message) {
 		a = JSON.parse(data);
 		var time = new Date();
 		console.log("Date insert: " +time);
-		connection.query('INSERT INTO SENSORS(Temperature,Humidity,P2_5,Date_Time) values(?,?,?,?)', [a.Temperature,a.Humidity,a.P2_5,time]).then(conn => {
+		connection.query('INSERT INTO SENSORS(Temperature,Humidity,PM2_5,Date_Time) values(?,?,?,?)', [a.Temperature,a.Humidity,a.P2_5,time]).then(conn => {
 		console.log("Inserted");
 		});
 		io.sockets.emit('temp_hum', {hum:a.Humidity,temp:a.Temperature});
