@@ -4,10 +4,10 @@ from datetime import datetime
 from time import sleep
 
 #MQTT settings
-MQTT_Server = "localhost"
+MQTT_Server = "192.168.0.107"
 MQTT_Port = 1883
 Keep_Alive_Interval = 45
-MQTT_Topic = "DHT11"
+MQTT_Topic = "Outside"
 
 def on_connect(client, userdate, rc):
     if rc != 0:
@@ -37,14 +37,10 @@ def publish_To_Topic(topic, message):
 def publish_Values_to_MQTT():
     temp = int(random.uniform(20,35))
     hum = int(random.uniform(20,90))
-    CO = int(random.uniform(40,80))
-    SO2 = float("{0:.2f}".format(random.uniform(0.3,0.7)))
     P2_5 = float("{0:.2f}".format(random.uniform(0.3,0.7)))	
     Sensor_data = {}
     Sensor_data['Temperature'] = temp
     Sensor_data['Humidity'] = hum
-    Sensor_data['CO'] = CO
-    Sensor_data['SO2'] = SO2
     Sensor_data['P2_5'] = P2_5
     Sensor_json_data = json.dumps(Sensor_data)
     print("Publishing Value: ")
