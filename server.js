@@ -118,9 +118,9 @@ client.on("connect", function() {
 });
 var P2_5 = 0;
 var P2_5_out = 0
+var PM2_5_Room = 0;
+var PM2_5_outside = 0;
 function push_data(){
-	var PM2_5_Room = 0;
-	var PM2_5_outside = 0;
 	connection.query('SELECT * FROM SENSORS ORDER BY id DESC limit 10')
 		.then(row => {
 			row.forEach(function(value) {
@@ -158,12 +158,11 @@ function push_data(){
 			P2_5_out = 0;		
 	});
 	var time = new Date();
-		console.log("Date insert: " +time);
-		connection.query('INSERT INTO AQI_ALL(PM2_5,PM2_5_out,Date_Time) values(?,?,?)', [PM2_5_Room,PM2_5_outside,time]).then(conn => {
+	console.log("Date insert: " +time);
+	connection.query('INSERT INTO AQI_ALL(PM2_5,PM2_5_out,Date_Time) values(?,?,?)', [PM2_5_Room,PM2_5_outside,time]).then(conn => {
 		console.log("Inserted");
 		console.log("room: " + PM2_5_Room);
 		console.log("outside: "+ PM2_5_outside)
-
 	});
 	io.sockets.emit('temp', {time:time, P2_5:PM2_5_Room, P2_5_out:PM2_5_outside});
 }
