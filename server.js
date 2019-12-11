@@ -126,17 +126,10 @@ function push_data(){
 			row.forEach(function(value) {
 				var m_time = value.Date_Time.toString().slice(4,24);
 				P2_5 = P2_5 + value.PM2_5;
-				//io.sockets.emit('temp', {time:m_time, P2_5:value.P2_5, hum:value.Humidity,CO:value.CO, SO2:value.SO2, temp:value.Temperature});
 			});
 			var P2_5_data= parseInt(((P2_5/10) / 0.3)*100);
 			console.log(P2_5_data);
-			// var time = new Date();
-			// console.log("Date insert: " +time);
-			// connection.query('INSERT INTO AQI(PM2_5,Date_Time) values(?,?)', [P2_5_data,time]).then(conn => {
-			// console.log("Inserted");
-			// });
 			PM2_5_Room = P2_5_data;
-			// io.sockets.emit('temp', {time:time, P2_5:P2_5_data});
 			P2_5 = 0;		
 	});
 	connection.query('SELECT * FROM SENSORS1 ORDER BY id DESC limit 10')
@@ -144,17 +137,10 @@ function push_data(){
 			row.forEach(function(value) {
 				var m_time = value.Date_Time.toString().slice(4,24);
 				P2_5_out = P2_5_out + value.PM2_5;
-				//io.sockets.emit('temp', {time:m_time, P2_5:value.P2_5, hum:value.Humidity,CO:value.CO, SO2:value.SO2, temp:value.Temperature});
 			});
 			var P2_5_data_out= parseInt(((P2_5_out/10) / 0.3)*100);
 			console.log(P2_5_data_out);
-			// var time = new Date();
-			// console.log("Date insert: " +time);
-			// connection.query('INSERT INTO AQI1(PM2_5,Date_Time) values(?,?)', [P2_5_data_out,time]).then(conn => {
-			// console.log("Inserted");
-			// });
 			PM2_5_outside = P2_5_data_out;
-			// io.sockets.emit('temp1', {time:time, P2_5:P2_5_data});
 			P2_5_out = 0;		
 	});
 	var time = new Date();
