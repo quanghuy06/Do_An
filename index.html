@@ -70,7 +70,7 @@
               <img src="https://cdn4.iconfinder.com/data/icons/autumn-24/32/thermometer-autumn-humidity-fall-rain-temperature-measure-512.png"  width="100p" height="100"style="margin-top: 15px">
             </div>
             <div id="aqi" class="col-sm-3" style="border-top: solid;">
-              <center style="font-size:300%;">AQI<p id='AQI' >0</p></center>
+              <center style="font-size:300%;">AQI for PM2.5<p id='AQI' >0</p></center>
               <center style="font-size:200%;"><p id='AQI_status' ></p></center>
             </div>
             <div id="aqi" class="col-sm-1" style=" border-top: solid;border-right: solid;">
@@ -78,28 +78,6 @@
             </div>
       </div>
     </div>
-  	<div class="col-sm-12">
-    	<div class="row">
-        	  <div id="pm25" class="col-sm-3" style="border-left: solid; border-top: solid;">
-            	<center style="font-size:300%;">PM2.5<p id='P2_5' >0</p></center>
-            </div>
-            <div id="pm25" class="col-sm-1" style=" border-top: solid;">
-            	<img src="https://cdn1.iconfinder.com/data/icons/dust-1/500/dust-13-512.png"  width="90p" height="100">
-            </div>
-            <div id="co" class="col-sm-3" style="border-top: solid;border-left: solid;">
-              <center style="font-size:300%;">CO<p id='CO'>0</p></center>
-            </div>
-            <div id="co" class="col-sm-1" style="border-top: solid;border-right: solid;">
-              <img src="http://cityofmentor.com/wp-content/uploads/carbon-monoxide-300x300-250x250.png" style="margin-top: 7px">
-            </div>
-            <div id="so2"  class="col-sm-3"	style="border-top: solid;">
-            	<center style="font-size:300%;">SO2<p id='SO2'>0</p></center>
-            </div>
-            <div id="so2" class="col-sm-1" style=" border-top: solid;border-right: solid;">
-            	<img src="https://www.weerstationkempen.be/template/homepage/blocks/airQualityWorld/icons/light/so2.png" style="margin-top: 7px">
-            </div>
-        </div>
-    </div>	
     <div class="col-sm-12" style="border-left: solid; border-top: solid;border-right: solid;">
       <div class="col-sm-6">
         <img src="https://www.ema.co.tt/images/Files/Air/AQI_EMAv2.png">
@@ -115,7 +93,7 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>
            <script>
-            var socket = io.connect('http://192.168.0.104:3000'); //connect to server
+            var socket = io.connect('http://192.168.0.107:3000'); //connect to server
 
             var ctx = document.getElementById('myChart').getContext('2d');
             var chart = new Chart(ctx, {
@@ -126,27 +104,13 @@
                 data: {
                 labels: [],
                 datasets: [{
-                    label: "P2_5 Value",
+                    label: "AQI Room",
                     borderColor: "orange",
                     data: [],
                     fill: false,
                     backgroundColor: 'orange',
-                },
-				{
-                    label: "CO Value",
-                    borderColor: "navy",
-                    data: [],
-                    fill: false,
-                    backgroundColor: 'navy',
-				},
-				{
-                    label: "SO2 Value",
-                    borderColor: "yellow",
-                    data: [],
-                    fill: false,
-                    backgroundColor: 'yellow',
                 }
-				]
+				        ]
                 },
 
                 // Configuration options go here
@@ -173,86 +137,39 @@
                 }
             });
             socket.on('temp', function(data) { //As a temp data is received 
-        				
-                var my_data = [data.P2_5 , data.CO, data.SO2];
-                var AQI_max = my_data[0];
-                for(var i = 0; i<=2; i++)
-               	{
-                   if(AQI_max < my_data[i]){
-                     AQI_max = my_data[i];
-                   }
-                }
-		            console.log(AQI_max);
+                var my_data = [data.P2_5];
         				console.log(my_data);
         				var index = 0;
-                document.getElementById('AQI').innerHTML = AQI_max;
-                if(AQI_max <= 50){
+                document.getElementById('AQI').innerHTML = my_data;
+                if(my_data <= 50){
                   document.getElementById('AQI').style.backgroundColor = '#2ee82e';
                   document.getElementById('AQI_status').innerHTML = 'Good';
                   document.getElementById('AQI_status').style.backgroundColor = '#2ee82e';
                 }
-                if(AQI_max > 50 && AQI_max <= 100){
+                if(my_data > 50 && AQI_max <= 100){
                   document.getElementById('AQI').style.backgroundColor = '#FFFF00';
                   document.getElementById('AQI_status').innerHTML = 'Moderate';
                   document.getElementById('AQI_status').style.backgroundColor = '#FFFF00';
                 }
-                if(AQI_max > 100 && AQI_max <= 150){
+                if(my_data > 100 && AQI_max <= 150){
                   document.getElementById('AQI').style.backgroundColor = '#e87912';
                   document.getElementById('AQI_status').innerHTML = 'Unhealthy For Sensitive Group';
                   document.getElementById('AQI_status').style.backgroundColor = '#e87912';
                 }
-                if(AQI_max > 150 && AQI_max <= 200){
+                if(my_data > 150 && AQI_max <= 200){
                   document.getElementById('AQI').style.backgroundColor = '#e20909';
                   document.getElementById('AQI_status').innerHTML = 'Unhealthy';
                   document.getElementById('AQI_status').style.backgroundColor = '#e20909';
                 }
-                if(AQI_max > 200 && AQI_max <= 300){
+                if(my_data > 200 && AQI_max <= 300){
                   document.getElementById('AQI').style.backgroundColor = '#8008d6';
                   document.getElementById('AQI_status').innerHTML = 'Very Unhealthy';
                   document.getElementById('AQI_status').style.backgroundColor = '#8008d6';
                 }
-                if(AQI_max > 300){
+                if(my_data > 300){
                   document.getElementById('AQI').style.backgroundColor = '#77224b';
                   document.getElementById('AQI_status').innerHTML = 'Hazadrous';
                   document.getElementById('AQI_status').style.backgroundColor = '#77224b';
-                }
-                document.getElementById('CO').innerHTML = data.CO; //update the date
-                if(data.CO <= 50){
-                	document.getElementById('CO').style.backgroundColor = '#2ee82e';
-                }
-                if(data.CO > 50 && data.CO <= 100){
-                	document.getElementById('CO').style.backgroundColor = '#FFFF00';
-                }
-                if(data.CO > 100 && data.CO <= 150){
-                	document.getElementById('CO').style.backgroundColor = '#e87912';
-                }
-                if(data.CO > 150 && data.CO <= 200){
-                  document.getElementById('CO').style.backgroundColor = '#e20909';
-                }
-                if(data.CO > 200 && data.CO <= 300){
-                  document.getElementById('CO').style.backgroundColor = '#8008d6';
-                }
-                if(data.CO > 300){
-                  document.getElementById('CO').style.backgroundColor = '#77224b';
-                }
-                document.getElementById('SO2').innerHTML = data.SO2;
-                if(data.SO2 <= 50){
-                  document.getElementById('SO2').style.backgroundColor = '#2ee82e';
-                }
-                if(data.SO2 > 50 && data.SO2 <= 100){
-                  document.getElementById('SO2').style.backgroundColor = '#FFFF00';
-                }
-                if(data.SO2 > 100 && data.SO2 <= 150){
-                  document.getElementById('SO2').style.backgroundColor = '#e87912';
-                }
-                if(data.SO2 > 150 && data.SO2 <= 200){
-                  document.getElementById('SO2').style.backgroundColor = '#e20909';
-                }
-                if(data.SO2 > 200 && data.SO2 <= 300){
-                  document.getElementById('SO2').style.backgroundColor = '#8008d6';
-                }
-                if(data.SO2 > 300){
-                  document.getElementById('SO2').style.backgroundColor = '#77224b';
                 }
                 document.getElementById('P2_5').innerHTML = data.P2_5;
                 if(data.P2_5 <= 50){
