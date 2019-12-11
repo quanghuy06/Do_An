@@ -121,14 +121,14 @@ function push_data(){
 		.then(row => {
 			row.forEach(function(value) {
 				var m_time = value.Date_and_Time.toString().slice(4,24);
-				P2_5 = P2_5 + value.P2_5;
+				P2_5 = P2_5 + value.PM2_5;
 				//io.sockets.emit('temp', {time:m_time, P2_5:value.P2_5, hum:value.Humidity,CO:value.CO, SO2:value.SO2, temp:value.Temperature});
 			});
 			var P2_5_data= parseInt(((P2_5/10) / 0.3)*100);
 			console.log(P2_5_data);
 			var time = new Date();
 			console.log("Date insert: " +time);
-			connection.query('INSERT INTO AQI(PM2_5,Date_Time) values(?,?)', [CO_data,SO2_data,P2_5_data,time]).then(conn => {
+			connection.query('INSERT INTO AQI(PM2_5,Date_Time) values(?,?)', [P2_5_data,time]).then(conn => {
 			console.log("Inserted");
 			});
 			io.sockets.emit('temp', {time:time, P2_5:P2_5_data});
@@ -153,7 +153,7 @@ client.on("message", function(topic, message) {
 		a = JSON.parse(data);
 		var time = new Date();
 		console.log("Date insert: " +time);
-		connection.query('INSERT INTO SENSORS(Temperature,Humidity,PM2_5,Date_Time) values(?,?,?,?)', [a.Temperature,a.Humidity,a.P2_5,time]).then(conn => {
+		connection.query('INSERT INTO SENSORS(Temperature,Humidity,PM2_5,Date_Time) values(?,?,?,?)', [a.Temperature,a.Humidity,a.PM2_5,time]).then(conn => {
 		console.log("Inserted");
 		});
 		io.sockets.emit('temp_hum', {hum:a.Humidity,temp:a.Temperature});
@@ -168,7 +168,7 @@ io.on('connection', (socket) => {
 			console.log(row);
 			row.forEach(function(value) {
 				var m_time = value.Date_and_Time.toString().slice(4,24);
-				io.sockets.emit('temp', {time:m_time, P2_5:value.P2_5});
+				io.sockets.emit('temp', {time:m_time, P2_5:value.PM2_5});
 		});
 	});
 });
