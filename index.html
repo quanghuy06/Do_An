@@ -137,6 +137,8 @@
                 }
             });
             socket.on('temp', function(data) { //As a temp data is received 
+                var my_data = [data.P2_5];
+        				console.log(my_data);
         				var index = 0;
                 document.getElementById('AQI').innerHTML = data.P2_5;
                 if(data.P2_5 <= 50){
