@@ -119,7 +119,8 @@ client.on("connect", function() {
 var P2_5 = 0;
 var PM2_5_out = 0
 function push_data(){
-	var PM2_5_Room, PM2_5_outside;
+	var PM2_5_Room = 0;
+	var PM2_5_outside = 0;
 	connection.query('SELECT * FROM SENSORS ORDER BY id DESC limit 10')
 		.then(row => {
 			row.forEach(function(value) {
