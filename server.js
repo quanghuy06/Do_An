@@ -12,10 +12,7 @@ app.set('view engine', 'html');
 app.set('views', __dirname);
 app.engine('html', require('ejs').renderFile);
 
-
 var client = mqtt.connect("mqtt://192.168.0.107:1883", {username:"huytq",password:"quanghuy@123"});
-console.log("connected flag " + client.connected);
-
 client.on("connect", function(){
 	console.log("connected MQTT"+ client.connected);
 });
@@ -79,7 +76,6 @@ app.post('/auth', function(request, response) {
 				request.session.username = username;
 				console.log("session.username: " + request.session.username);
 				response.redirect('/home');
-				console.log("Duong dan: ");
 			} else {
 				response.send('No Connect Account!');
 
@@ -128,7 +124,6 @@ function push_data(){
 				P2_5 = P2_5 + value.PM2_5;
 			});
 			var P2_5_data= parseInt(((P2_5/10) / 0.3)*100);
-			console.log(P2_5_data);
 			PM2_5_Room = P2_5_data;
 			P2_5 = 0;		
 	});
@@ -139,16 +134,14 @@ function push_data(){
 				P2_5_out = P2_5_out + value.PM2_5;
 			});
 			var P2_5_data_out= parseInt(((P2_5_out/10) / 0.3)*100);
-			console.log(P2_5_data_out);
 			PM2_5_outside = P2_5_data_out;
 			P2_5_out = 0;		
 	});
 	var time = new Date();
-	console.log("Date insert: " +time);
 	connection.query('INSERT INTO AQI_ALL(PM2_5,PM2_5_out,Date_Time) values(?,?,?)', [PM2_5_Room,PM2_5_outside,time]).then(conn => {
-		console.log("Inserted");
-		console.log("room: " + PM2_5_Room);
-		console.log("outside: "+ PM2_5_outside)
+		console.log("Inserted AQI into database");
+		console.log("AQI room: " + PM2_5_Room);
+		console.log("AQI outside: "+ PM2_5_outside)
 	});
 	io.sockets.emit('temp', {time:time, P2_5:PM2_5_Room, P2_5_out:PM2_5_outside});
 }
@@ -163,9 +156,9 @@ client.on("message", function(topic, message) {
 			data = message.toString();
 			a = JSON.parse(data);
 			var time = new Date();
-			console.log("Date insert: " +time);
+			console.log("Date insert: " + time);
 			connection.query('INSERT INTO SENSORS(Temperature,Humidity,PM2_5,Date_Time) values(?,?,?,?)', [a.Temperature,a.Humidity,a.PM2_5,time]).then(conn => {
-			console.log("Inserted");
+			console.log("Inserted data from sensors in room into database");
 			});
 			io.sockets.emit('temp_hum', {hum:a.Humidity,temp:a.Temperature});
 		}
@@ -175,7 +168,7 @@ client.on("message", function(topic, message) {
 			var time = new Date();
 			console.log("Date insert: " +time);
 			connection.query('INSERT INTO SENSORS1(Temperature,Humidity,PM2_5,Date_Time) values(?,?,?,?)', [a.Temperature,a.Humidity,a.PM2_5,time]).then(conn => {
-			console.log("Inserted");
+			console.log("Inserted data from sensors outside into database");
 			});
 			io.sockets.emit('temp_hum1', {hum:a.Humidity,temp:a.Temperature});
 		}
