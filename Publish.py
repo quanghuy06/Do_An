@@ -37,7 +37,7 @@ def publish_To_Topic(topic, message):
 def publish_Values_to_MQTT():
     temp = int(random.uniform(20,35))
     hum = int(random.uniform(20,90))
-    P2_5 = float("{0:.2f}".format(random.uniform(0.3,0.7)))	
+    P2_5 = float("{0:.2f}".format(random.uniform(0.01,0.2)))	
     Sensor_data = {}
     Sensor_data['Temperature'] = temp
     Sensor_data['Humidity'] = hum
