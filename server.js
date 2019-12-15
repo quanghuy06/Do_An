@@ -138,7 +138,7 @@ function push_data(){
 			P2_5_out = 0;		
 	});
 	var time = new Date();
-	connection.query('INSERT INTO AQI(PM2_5,PM2_5_out,Date_Time) values(?,?,?)', [PM2_5_Room,PM2_5_outside,time]).then(conn => {
+	connection.query('INSERT INTO AQI(PM2_5_room,PM2_5_outside,Date_Time) values(?,?,?)', [PM2_5_Room,PM2_5_outside,time]).then(conn => {
 		console.log("Inserted AQI into database");
 		console.log("AQI room: " + PM2_5_Room);
 		console.log("AQI outside: "+ PM2_5_outside)
@@ -183,7 +183,7 @@ io.on('connection', (socket) => {
 			console.log(row);
 			row.forEach(function(value) {
 				var m_time = value.Date_Time.toString().slice(4,24);
-				io.sockets.emit('temp', {time:time, P2_5:value.PM2_5, P2_5_out:PM2_5_out});
+				io.sockets.emit('temp', {time:time, P2_5:value.PM2_5_room, P2_5_out:PM2_5_outside});
 		});
 	});
 });
