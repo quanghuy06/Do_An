@@ -117,7 +117,7 @@ var P2_5_out = 0
 var PM2_5_Room = 0;
 var PM2_5_outside = 0;
 function push_data(){
-	connection.query('SELECT * FROM SENSORS ORDER BY id DESC limit 10')
+	connection.query('SELECT * FROM NODE1 ORDER BY id DESC limit 10')
 		.then(row => {
 			row.forEach(function(value) {
 				var m_time = value.Date_Time.toString().slice(4,24);
@@ -127,7 +127,7 @@ function push_data(){
 			PM2_5_Room = P2_5_data;
 			P2_5 = 0;		
 	});
-	connection.query('SELECT * FROM SENSORS1 ORDER BY id DESC limit 10')
+	connection.query('SELECT * FROM NODE2 ORDER BY id DESC limit 10')
 		.then(row => {
 			row.forEach(function(value) {
 				var m_time = value.Date_Time.toString().slice(4,24);
@@ -138,7 +138,7 @@ function push_data(){
 			P2_5_out = 0;		
 	});
 	var time = new Date();
-	connection.query('INSERT INTO AQI_ALL(PM2_5,PM2_5_out,Date_Time) values(?,?,?)', [PM2_5_Room,PM2_5_outside,time]).then(conn => {
+	connection.query('INSERT INTO AQI(PM2_5,PM2_5_out,Date_Time) values(?,?,?)', [PM2_5_Room,PM2_5_outside,time]).then(conn => {
 		console.log("Inserted AQI into database");
 		console.log("AQI room: " + PM2_5_Room);
 		console.log("AQI outside: "+ PM2_5_outside)
@@ -157,8 +157,8 @@ client.on("message", function(topic, message) {
 			a = JSON.parse(data);
 			var time = new Date();
 			console.log("Date insert: " + time);
-			connection.query('INSERT INTO SENSORS(Temperature,Humidity,PM2_5,Date_Time) values(?,?,?,?)', [a.Temperature,a.Humidity,a.PM2_5,time]).then(conn => {
-			console.log("Inserted data from sensors in room into database");
+			connection.query('INSERT INTO NODE1(Temperature,Humidity,PM2_5,Date_Time) values(?,?,?,?)', [a.Temperature,a.Humidity,a.PM2_5,time]).then(conn => {
+			console.log("Inserted data from node1 in room into database");
 			});
 			io.sockets.emit('temp_hum', {hum:a.Humidity,temp:a.Temperature});
 		}
@@ -167,8 +167,8 @@ client.on("message", function(topic, message) {
 			a = JSON.parse(data);
 			var time = new Date();
 			console.log("Date insert: " +time);
-			connection.query('INSERT INTO SENSORS1(Temperature,Humidity,PM2_5,Date_Time) values(?,?,?,?)', [a.Temperature,a.Humidity,a.PM2_5,time]).then(conn => {
-			console.log("Inserted data from sensors outside into database");
+			connection.query('INSERT INTO NODE2(Temperature,Humidity,PM2_5,Date_Time) values(?,?,?,?)', [a.Temperature,a.Humidity,a.PM2_5,time]).then(conn => {
+			console.log("Inserted data from node2 outside into database");
 			});
 			io.sockets.emit('temp_hum1', {hum:a.Humidity,temp:a.Temperature});
 		}
@@ -177,7 +177,7 @@ client.on("message", function(topic, message) {
 
 io.on('connection', (socket) => {
 	console.log("Someone connectted")
-	connection.query('SELECT * FROM AQI_ALL')
+	connection.query('SELECT * FROM AQI')
 		.then(row => {
 			console.log("Databases: ");
 			console.log(row);
